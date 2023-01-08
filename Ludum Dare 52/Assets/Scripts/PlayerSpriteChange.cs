@@ -8,7 +8,7 @@ public class PlayerSpriteChange : MonoBehaviour
     public int playerState; // 0 = 서있는거 / 3 = 일 중 (추가 상태 필요하면 int 늘리기)
     public bool playerStateChange; // 원상태 false, 만약 스프라이트 변화 필요할 경우 true로
     public Sprite[] playerOldSprite; // 0 = 청년 그냥 / 1 = 중년 그냥/ 2 = 노년 그냥
-    public GameManager gameManager; // gameManager 연결 필요
+    private GameManager gameManager; // gameManager 연결 필요
 
     private int preOld; // player의 old 변화 이전 상태
     private int preState; // player의 state 변화 이전 상태
@@ -21,6 +21,7 @@ public class PlayerSpriteChange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         playerStateChange = false;
         playerSprite = GetComponent<SpriteRenderer>();
         maxHp = gameManager.GetComponent<GameManager>().maxHp;
@@ -39,12 +40,12 @@ public class PlayerSpriteChange : MonoBehaviour
 
         if (inputRaw > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = true;
         }
 
         else if (inputRaw < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = false;
         }
 
 
@@ -91,15 +92,6 @@ public class PlayerSpriteChange : MonoBehaviour
 
             playerSprite.sprite = playerOldSprite[playerOld + playerState];
 
-            // 중년, 노년 구하기 전에 임시로 색깔만 바꾸기
-            if(playerOld + playerState == 1 || playerOld + playerState == 4)
-            {
-                playerSprite.material.color = new Color(91/255f, 91/255f, 91/255f, 1);;
-            }
-            else if (playerOld + playerState == 2 || playerOld + playerState == 5)
-            {
-                playerSprite.material.color = new Color(43 / 255f, 43/255f, 43/255f, 1);
-            }
             playerStateChange = false;
         }
     }

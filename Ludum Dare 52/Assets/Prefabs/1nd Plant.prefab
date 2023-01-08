@@ -1520,7 +1520,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7bd556eda3000444a981bfee83e09508, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f32082d9848e7824ba3ed57d1ce8ea50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1564,8 +1564,8 @@ MonoBehaviour:
   isClicked: 0
   grade: 0
   plantSprite:
-  - {fileID: 21300000, guid: f5f013b6046a9074289556163ef80c7d, type: 3}
-  - {fileID: 21300000, guid: 347d28a9f80928049b7cd1a0d0ce0e51, type: 3}
+  - {fileID: 21300000, guid: 55d53dad661545c4a8406a44b3b60db7, type: 3}
+  - {fileID: 21300000, guid: c80ab6b10a3991547a844050b096c791, type: 3}
   upgradeText: {fileID: 5680843570767242491}
   deleteText: {fileID: 8729561069537220829}
   hpbar: {fileID: 2024277613691858867}
@@ -1586,7 +1586,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.03, y: 1.07}
+    oldSize: {x: 0.8, y: 0.7}
     newSize: {x: 0.83, y: 1.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

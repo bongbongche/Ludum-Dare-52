@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject firstPlantPrefabs;
+    [Header("Player")]
     public float horizontalInput;
     public float verticalInput;
     public float moveSpeed = 1.0f;
@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public bool canMove;
     public bool canPlant;
     public Vector2 playerIntPos;
+
+    [Header("Variables")]
+    public GameObject firstPlantPrefabs;
     public BoxCollider2D[] attackColliders;
 
     private Rigidbody2D playerRb;

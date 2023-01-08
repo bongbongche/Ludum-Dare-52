@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Transform target;
-    public GameManager gameManager;
+    [Header("Enemy Status")]
     public float enemySpeed = 4f;
     public float attackPower = 1f;
     public float attackInterval = 2f;
@@ -13,17 +12,26 @@ public class Enemy : MonoBehaviour
     public float enemyMaxHp = 30f;
     public float knockback = 100f;
 
+    [Header("Variables")]
+    public Sprite[] enemySprites;
+
     private float distance;
     private float elapsedTime;
     private Vector3 direction;
     private int directionX;
     private Rigidbody2D enemyRb;
     private SpriteRenderer enemySpriteRenderer;
+    private GameManager gameManager;
+    private Transform target;
+
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody2D>();
         enemySpriteRenderer = GetComponent<SpriteRenderer>();
+        enemySpriteRenderer.sprite = enemySprites[Random.Range(0, 3)];
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        target = GameObject.Find("Player").GetComponent<Transform>();
         elapsedTime = 0;
     }
 
@@ -31,12 +39,12 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // 적과 타겟의 거리를 리턴
-        distance = Vector3.Distance(transform.position, target.position);
+        distance = Vector3.Distance(transform.position, target.transform.position);
 
         // 타겟 따라다니기
         EnemyMove();
 
-        if(enemyHp < 0)
+        if(enemyHp <= 0)
         {
             Destroy(gameObject);
         }
@@ -50,8 +58,8 @@ public class Enemy : MonoBehaviour
 
     private void EnemyMove()
     {
-        direction = target.position - transform.position;
-        directionX = (target.position.x - transform.position.x < 0) ? -1 : 1; 
+        direction = target.transform.position - transform.position;
+        directionX = (target.transform.position.x - transform.position.x < 0) ? -1 : 1; 
 
         transform.Translate(direction.normalized * enemySpeed * Time.deltaTime);
         if (directionX < 0)

@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 317b8365a4649ab459f6cb58ec8f9f18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ac38359125cbef4a8450df97fcd080c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,14 +99,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4d2b029a763a7448db86b834664356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  gameManager: {fileID: 0}
-  enemySpeed: 3
+  enemySpeed: 1.5
   attackPower: 1
   attackInterval: 0.5
   enemyHp: 30
   enemyMaxHp: 30
   knockback: 0.1
+  enemySprites:
+  - {fileID: 21300000, guid: 8ac38359125cbef4a8450df97fcd080c, type: 3}
+  - {fileID: 21300000, guid: a4347a00e73aceb4ca1082c31c8b1378, type: 3}
+  - {fileID: 21300000, guid: d1363f437798ba44991a0ede39632f11, type: 3}
 --- !u!50 &1907164102499444491
 Rigidbody2D:
   serializedVersion: 4
@@ -141,6 +143,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01843214, y: 0.6578393}
-  m_Size: {x: 0.55381685, y: 1.1559334}
+  m_Offset: {x: 0.01843214, y: 0.57436347}
+  m_Size: {x: 0.55381685, y: 0.9889817}
   m_Direction: 0
