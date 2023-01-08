@@ -40,7 +40,7 @@ public class Plant : MonoBehaviour
 
     private SpriteRenderer plantSpriteRenderer;
     private GameManager gameManager;
-    private float elapsedTime;
+    private float elapsedTime = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,28 +71,36 @@ public class Plant : MonoBehaviour
         {
             hpbar.value = thirdPlantHp / thirdMaxPlantHp;
         }
+
+        if(plantHp <= 0)
+        {
+            PlantDelete();
+        }
     }
 
     // 식물 누르면 팝업창
     private void OnMouseDown()
     {
-        if(isClicked == false && grade == 0)    // 3단계가 아닐 때만 팝업창 열기 가능
+        if(gameManager.isGameActive == true)
         {
-            gameObject.transform.GetChild(2).gameObject.SetActive(true);
-            upgradeText.text = "HP: " + plantHp + " -> " + secondPlantHp + "\n" +
-                "+" + supplyHp + "HP / s -> +" + secondSupplyHp + "HP / s\n" +
-                "Cost: " + secondCost;
-            deleteText.text = "+" + instantHp + " recovery";
-            isClicked = true;
-        }
-        else if(isClicked == false && grade == 1)    // 3단계가 아닐 때만 팝업창 열기 가능
-        {
-            gameObject.transform.GetChild(2).gameObject.SetActive(true);
-            upgradeText.text = "HP: " + secondPlantHp + " -> " + thirdPlantHp + "\n" +
-                "+" + secondSupplyHp + "HP / s -> +" + thirdSupplyHp + "HP / s\n" +
-                "Cost: " + thirdCost;
-            deleteText.text = "+" + secondInstantHp + " recovery";
-            isClicked = true;
+            if (isClicked == false && grade == 0)    // 3단계가 아닐 때만 팝업창 열기 가능
+            {
+                gameObject.transform.GetChild(2).gameObject.SetActive(true);
+                upgradeText.text = "HP: " + plantHp + " -> " + secondPlantHp + "\n" +
+                    "+" + supplyHp + "HP / s -> +" + secondSupplyHp + "HP / s\n" +
+                    "Cost: " + secondCost;
+                deleteText.text = "+" + instantHp + " recovery";
+                isClicked = true;
+            }
+            else if (isClicked == false && grade == 1)    // 3단계가 아닐 때만 팝업창 열기 가능
+            {
+                gameObject.transform.GetChild(2).gameObject.SetActive(true);
+                upgradeText.text = "HP: " + secondPlantHp + " -> " + thirdPlantHp + "\n" +
+                    "+" + secondSupplyHp + "HP / s -> +" + thirdSupplyHp + "HP / s\n" +
+                    "Cost: " + thirdCost;
+                deleteText.text = "+" + secondInstantHp + " recovery";
+                isClicked = true;
+            }
         }
     }
 

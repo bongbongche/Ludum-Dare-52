@@ -34,6 +34,20 @@ public class PlayerSpriteChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 방향키에 따라 돌아보는 방향 달라지게 하기
+        float inputRaw = Input.GetAxisRaw("Horizontal");
+
+        if (inputRaw > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+        else if (inputRaw < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+
         if (gameManager.GetComponent<GameManager>().playerHp > (maxHp / 3) * 2)
         {
             playerOld = 0;

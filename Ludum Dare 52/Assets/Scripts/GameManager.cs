@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
             time += Time.deltaTime;
 
             // 초 단위로 스코어 업데이트
-            scoreText.text = "Score: " + Mathf.Ceil(time).ToString();
+            scoreText.text = "Time: " + Mathf.Ceil(time).ToString();
 
             // 플레이어 체력 업데이트
             playerHp = sumHp - time;

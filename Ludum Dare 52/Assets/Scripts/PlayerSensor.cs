@@ -22,13 +22,19 @@ public class PlayerSensor : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         // 플레이어가 심으려고 하는 자리에 식물이 있어서 충돌한다면 심을 수 없음
-        GetComponentInParent<PlayerController>().canPlant = false;
+        if(collision.CompareTag("Plant"))
+        {
+            GetComponentInParent<PlayerController>().canPlant = false;
+        }
     }
 
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         // 플레이어가 심을 수 없는 장소를 벗어나면 다시 심을 수 있음.
-        GetComponentInParent<PlayerController>().canPlant = true;
+        if (collision.CompareTag("Plant"))
+        {
+            GetComponentInParent<PlayerController>().canPlant = true;
+        }
     }
 }

@@ -9,22 +9,28 @@ public class PlayerController : MonoBehaviour
     public float verticalInput;
     public float moveSpeed = 1.0f;
     public float plantingSpeed = 1.5f;
+    public float attackPower = 10f;
+    public float attackDelay = 1f;
     public bool canMove;
     public bool canPlant;
     public Vector2 playerIntPos;
+    public BoxCollider2D[] attackColliders;
 
     private Rigidbody2D playerRb;
     private PlayerSpriteChange playerSpriteChangeScript;
     private GameManager gameManager;
+    private float lastAttack;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
         playerSpriteChangeScript = GetComponent<PlayerSpriteChange>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        attackColliders = gameObject.GetComponentsInChildren<BoxCollider2D>();
 
         canMove = true;
         canPlant = true;
+        lastAttack = 0f;
     }
 
     // Update is called once per frame
@@ -47,6 +53,9 @@ public class PlayerController : MonoBehaviour
 
         if(gameManager.isGameActive == true)
         {
+            // 플레이어의 현재 위치를 정수 단위로 반환. 칸마다 식물을 심기 위해서.
+            playerIntPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+
             // 식물 심기 (심을 수 있을 때만)
             if (Input.GetKeyDown(KeyCode.Space) && canPlant == true)
             {
@@ -59,10 +68,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Can't plant");
             }
 
-            // 플레이어의 현재 위치를 정수 단위로 반환. 칸마다 식물을 심기 위해서.
-            playerIntPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
-
+            AttackEnemy();
         }
+
     }
 
     void Planting()
@@ -79,5 +87,35 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(plantingSpeed); // 플레이어의 노화 수준에 따라 식물 심는 속도가 달라짐
         Planting();
         canMove = true;
+    }
+
+    void AttackEnemy()
+    {
+        if(Time.time >= lastAttack + attackDelay)
+        {
+            lastAttack = Time.time;
+            attackColliders[0].enabled = true;
+            gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            attackColliders[1].enabled = true;
+            gameObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+            Invoke("EndAttack", 0.1f);
+        }
+    }
+
+    void EndAttack()
+    {
+        attackColliders[0].enabled = false;
+        gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        attackColliders[1].enabled = false;
+        gameObject.transform.GetChild(2).gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<Enemy>().GetDamage(attackPower);
+        }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5161154880495933098}
   - component: {fileID: 7670420206919912816}
   - component: {fileID: 1787882464904830612}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HP Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2402644960991191441}
   - component: {fileID: 7295764285321094066}
   - component: {fileID: 7026940982061916063}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Upgrade Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 5510143379519118507}
   - component: {fileID: 1019012450122496509}
   - component: {fileID: 6122069193511729935}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Plant Manage Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 157496749168525559}
   - component: {fileID: 4325213691572793819}
   - component: {fileID: 4708645867116869395}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 534056285267585548}
   - component: {fileID: 547725567041081921}
   - component: {fileID: 2057021984789379855}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Delete Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7221486564540582328}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 257696918755467293}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Delete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +717,7 @@ GameObject:
   - component: {fileID: 7263883902285502515}
   - component: {fileID: 6445003756294869689}
   - component: {fileID: 8729561069537220829}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Delete Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 8214919035654970620}
   - component: {fileID: 7101935113711486290}
   - component: {fileID: 5680843570767242491}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Upgrade Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1039,7 +1039,7 @@ GameObject:
   - component: {fileID: 5769353248390339849}
   - component: {fileID: 2024277613691858867}
   - component: {fileID: 2264831163881389074}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 5156340344503525241}
   - component: {fileID: 8358581352090756140}
   - component: {fileID: 154148710091877445}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Exit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1277,7 +1277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4541741048821034227}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 4036520471614237379}
   - component: {fileID: 4154331224714315062}
   - component: {fileID: 2071250666575249511}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1452,9 +1452,10 @@ GameObject:
   - component: {fileID: 7243599993428834490}
   - component: {fileID: 869082418592971607}
   - component: {fileID: 6047954420142508616}
-  m_Layer: 0
+  - component: {fileID: 1556065218022594143}
+  m_Layer: 7
   m_Name: 1nd Plant
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1543,16 +1544,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantHp: 50
+  plantMaxHp: 50
   supplyHp: 0.2
   supplyGap: 1
   instantHp: 5
   cost: 10
   secondPlantHp: 80
+  secondMaxPlantHp: 80
   secondSupplyHp: 1
   secondSupplyGap: 1
   secondInstantHp: 15
   secondCost: 30
   thirdPlantHp: 150
+  thirdMaxPlantHp: 150
   thirdSupplyHp: 2
   thirdSupplyGap: 1
   thirdInstantHp: 45
@@ -1591,6 +1595,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.03, y: 1.07}
   m_EdgeRadius: 0
+--- !u!70 &1556065218022594143
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243599993428834491}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.535}
+  m_Size: {x: 1.03, y: 1.07}
+  m_Direction: 0
 --- !u!1 &7838345505800362033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1622,7 @@ GameObject:
   - component: {fileID: 7879713610815683240}
   - component: {fileID: 560566074225738758}
   - component: {fileID: 6942173822279603991}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1678,7 +1698,7 @@ GameObject:
   - component: {fileID: 6397440368978622214}
   - component: {fileID: 9616185815207854}
   - component: {fileID: 2413461514286500763}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1813,7 +1833,7 @@ GameObject:
   - component: {fileID: 5747200124274811044}
   - component: {fileID: 7973511767171007706}
   - component: {fileID: 3529753068176362253}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1949,7 +1969,7 @@ GameObject:
   - component: {fileID: 6206242410180289144}
   - component: {fileID: 565100712673135727}
   - component: {fileID: 1102084193955117290}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
