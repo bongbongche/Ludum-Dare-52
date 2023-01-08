@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour
     {
         // 플레이어의 정수 단위 위치에서 식물 심기
         Instantiate(firstPlantPrefabs, playerIntPos, transform.rotation);
+        // 1단계 식물 비용 빼기
+        gameManager.sumHp -= firstPlantPrefabs.GetComponent<Plant>().cost;
         playerSpriteChangeScript.playerState = 0;   // 플레이어의 상태를 비노동 상태로 업데이트
     }
 

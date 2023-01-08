@@ -3732,7 +3732,7 @@ MonoBehaviour:
   titleScreen: {fileID: 1008794226}
   gameOverScreen: {fileID: 89694165}
   playerHp: 100
-  maxHp: 10
+  maxHp: 100
   sumHp: 0
   isGameActive: 0
 --- !u!1 &1806429522
@@ -4006,6 +4006,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5485241452088899404, guid: 4d0e97f68f29bf143ac0e323acf2b035, type: 3}
+      propertyPath: firstPlantPrefabs
+      value: 
+      objectReference: {fileID: 7243599993428834491, guid: e000381b8f66069479f1b66a6b389c5b, type: 3}
     - target: {fileID: 5485241452088899405, guid: 4d0e97f68f29bf143ac0e323acf2b035, type: 3}
       propertyPath: m_RootOrder
       value: 1
