@@ -42,12 +42,14 @@ public class Plant : MonoBehaviour
 
     private SpriteRenderer plantSpriteRenderer;
     private GameManager gameManager;
+    private AudioSource audioSource;
     private float elapsedTime = 0;
     // Start is called before the first frame update
     void Start()
     {
         plantSpriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        audioSource = GetComponent<AudioSource>();
 
         plantHp = gameManager.plantHp;
         plantMaxHp = gameManager.plantMaxHp;
@@ -72,6 +74,7 @@ public class Plant : MonoBehaviour
 
         grade = 0;
         gameManager.grade_0 += 1;
+        audioSource.Play();
     }
 
     // Update is called once per frame

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         attackColliders = gameObject.GetComponentsInChildren<BoxCollider2D>();
 
-        canMove = true;
+        canMove = false;
         canPlant = true;
         lastAttack = 0f;
     }

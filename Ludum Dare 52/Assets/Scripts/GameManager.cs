@@ -72,9 +72,10 @@ public class GameManager : MonoBehaviour
     public float accelerationPoint = 0.5f;
     public float accelerationInterval = 10f;
     public float clearTime = 300f;
+    public int minute, second;
 
     private float scoreTime = 0.0f;
-    private float acceleratingTime = 0.0f;
+    //private float acceleratingTime = 0.0f;
     private PlayerController playerController;
     private Vector2 RandomSpawnPos;
     private float xInnerRange = 10;
@@ -85,15 +86,17 @@ public class GameManager : MonoBehaviour
     private float elapsedSpawnTime;
     private float elapsedHpMinusTime;
     private float elapsedAcceleratingTime;
-    private int minute, second;
+    private AudioSource gameClearAudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         sumHp = maxHp;
         // title 스크린 뜨게 하려면 false로 바꿀 것. Game Start 화면 active 시키고.
-        isGameActive = true;
+        isGameActive = false;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameClearAudioSource = gameClearScreen.GetComponent<AudioSource>();
+
         elapsedSpawnTime = 0;
         elapsedHpMinusTime = 0;
         elapsedAcceleratingTime = 0;
@@ -159,12 +162,12 @@ public class GameManager : MonoBehaviour
         }
 
         // 플레이어의 체력이 0이 됐을 때 게임 종료
-        if(playerHp <= 0)
+        if(playerHp <= 0 && isGameActive == true)
         {
             GameOver();
         }
 
-        if((clearTime - scoreTime) <= 0)
+        if((clearTime - scoreTime) <= 0 && isGameActive == true)
         {
             GameClear();
         }
@@ -193,6 +196,7 @@ public class GameManager : MonoBehaviour
     public void GameClear()
     {
         gameClearScreen.gameObject.SetActive(true);
+        gameClearAudioSource.Play();
         playerController.canMove = false;
         isGameActive = false;
     }
@@ -207,6 +211,7 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         isGameActive = true;
+        playerController.canMove = true;
         titleScreen.gameObject.SetActive(false);
     }
 

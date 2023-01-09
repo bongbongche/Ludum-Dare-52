@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D enemyRb;
     private SpriteRenderer enemySpriteRenderer;
     private GameManager gameManager;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
         enemySpriteRenderer.sprite = enemySprites[Random.Range(0, 3)];
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         target = GameObject.Find("Player");
+        audioSource = GetComponent<AudioSource>();
 
         enemySpeed = gameManager.enemySpeed;
         attackPower = gameManager.attackPower;
@@ -105,9 +107,9 @@ public class Enemy : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        audioSource.Play();
         enemyHp -= damage;
-
-        if(target.transform.position.x > transform.position.x)
+        if (target.transform.position.x > transform.position.x)
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-knockback, 0f));
         }
@@ -116,4 +118,5 @@ public class Enemy : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(knockback, 0f));
         }
     }
+
 }
