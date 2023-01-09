@@ -47,6 +47,7 @@ public class Plant : MonoBehaviour
         plantSpriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         grade = 0;
+        gameManager.grade_0 += 1;
     }
 
     // Update is called once per frame
@@ -72,9 +73,23 @@ public class Plant : MonoBehaviour
             hpbar.value = thirdPlantHp / thirdMaxPlantHp;
         }
 
+        // 피가 없으면 죽음
         if(plantHp <= 0)
         {
-            PlantDelete();
+            // 게임 매니저에게 제거됐다고 알려줌
+            if(grade == 0)
+            {
+                gameManager.grade_0 -= 1;
+            }
+            else if(grade == 1)
+            {
+                gameManager.grade_1 -= 1;
+            }
+            else if(grade == 2)
+            {
+                gameManager.grade_2 -= 1;
+            }
+            Destroy(gameObject);
         }
     }
 
@@ -125,6 +140,8 @@ public class Plant : MonoBehaviour
 
                 // 식물 설치 비용
                 gameManager.sumHp -= cost;
+                gameManager.grade_0 -= 1;
+                gameManager.grade_1 += 1;
             }
             else if (grade == 1)
             {
@@ -143,6 +160,8 @@ public class Plant : MonoBehaviour
 
                 // 식물 설치 비용
                 gameManager.sumHp -= cost;
+                gameManager.grade_1 -= 1;
+                gameManager.grade_2 += 1;
             }
         }
     }
@@ -151,6 +170,20 @@ public class Plant : MonoBehaviour
     public void PlantDelete()
     {
         gameManager.sumHp += instantHp;
+
+        // 게임 매니저에게 제거됐다고 알려줌
+        if (grade == 0)
+        {
+            gameManager.grade_0 -= 1;
+        }
+        else if (grade == 1)
+        {
+            gameManager.grade_1 -= 1;
+        }
+        else if (grade == 2)
+        {
+            gameManager.grade_2 -= 1;
+        }
 
         Destroy(gameObject);
     }

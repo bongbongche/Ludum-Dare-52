@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Variables")]
     public Sprite[] enemySprites;
+    public GameObject target;
 
     private float distance;
     private float elapsedTime;
@@ -22,7 +23,6 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D enemyRb;
     private SpriteRenderer enemySpriteRenderer;
     private GameManager gameManager;
-    private Transform target;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         enemySpriteRenderer = GetComponent<SpriteRenderer>();
         enemySpriteRenderer.sprite = enemySprites[Random.Range(0, 3)];
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        target = GameObject.Find("Player").GetComponent<Transform>();
+        target = GameObject.Find("Player");
         elapsedTime = 0;
     }
 

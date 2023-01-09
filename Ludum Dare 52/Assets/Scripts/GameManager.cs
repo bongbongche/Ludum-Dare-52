@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
     public int enemySpawnNum = 10;
     public int enemySpawnPlus = 3;
 
+    [Header("Plant Numbers")]
+    public int grade_0 = 0;
+    public int grade_1 = 0;
+    public int grade_2 = 0;
+
     private float time = 0.0f;
     private PlayerController playerController;
     private Vector2 RandomSpawnPos;
@@ -35,7 +40,7 @@ public class GameManager : MonoBehaviour
     private float xOuterRange = 3;
     private float yOuterRange = 3;
     private int spawnDirection;
-    private float elapsedTime;
+    private float elapsedSpawnTime;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +49,7 @@ public class GameManager : MonoBehaviour
         // title 스크린 뜨게 하려면 false로 바꿀 것. Game Start 화면 active 시키고.
         isGameActive = true;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        elapsedTime = 0;
+        elapsedSpawnTime = 0;
     }
 
     // Update is called once per frame
@@ -74,7 +79,7 @@ public class GameManager : MonoBehaviour
             }
 
             // 적 스폰 시간 변수
-            elapsedTime += Time.deltaTime;
+            elapsedSpawnTime += Time.deltaTime;
         }
 
         // 플레이어의 체력이 0이 됐을 때 게임 종료
@@ -84,15 +89,17 @@ public class GameManager : MonoBehaviour
         }
 
         // 정해진 인터벌에 정해진 수의 적 생성
-        if(elapsedTime >= enemySpawnInterval)
+        if(elapsedSpawnTime >= enemySpawnInterval)
         {
             for (int i = 0; i < enemySpawnNum; i++)
             {
                 RandomSpawn();
             }
-            elapsedTime = 0;
+            elapsedSpawnTime = 0;
             enemySpawnNum += enemySpawnPlus;
         }
+
+        Debug.Log("grade0 : " + grade_0 + ", grade1: " + grade_1 + ", grade2: " + grade_2);
     }
 
     // 게임 오버
