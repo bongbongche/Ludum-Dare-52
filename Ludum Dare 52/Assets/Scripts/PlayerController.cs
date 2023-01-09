@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private PlayerSpriteChange playerSpriteChangeScript;
     private GameManager gameManager;
     private float lastAttack;
+    private float xBound = 8.5f;
+    private float yBound = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +77,35 @@ public class PlayerController : MonoBehaviour
             AttackEnemy();
         }
 
+        if(transform.position.x > xBound)
+        {
+            transform.position = new Vector3(xBound, transform.position.y, 0);
+        }
+        if(transform.position.x < -xBound)
+        {
+            transform.position = new Vector3(-xBound, transform.position.y, 0);
+        }
+        if(transform.position.y > yBound - 0.5f)
+        {
+            transform.position = new Vector3(transform.position.x, yBound - 0.5f, 0);
+        }
+        if(transform.position.y < -yBound)
+        {
+            transform.position = new Vector3(transform.position.x, -yBound, 0);
+        }
+        /*
+        cameraPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (cameraPos.x < 0f) cameraPos.x = 0f;
+
+        if (cameraPos.x > 1f) cameraPos.x = 1f;
+
+        if (cameraPos.y < 0f) cameraPos.y = 0f;
+
+        if (cameraPos.y > 1f) cameraPos.y = 1f;
+
+        transform.position = Camera.main.ViewportToWorldPoint(cameraPos);
+        */
     }
 
     void Planting()
