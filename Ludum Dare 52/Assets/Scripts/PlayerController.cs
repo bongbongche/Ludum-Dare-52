@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float attackDelay = 1f;
     public bool canMove;
     public bool canPlant;
-    public Vector2 playerIntPos;
+    public Vector3 playerIntPos;
 
     [Header("Variables")]
     public GameObject firstPlantPrefabs;
@@ -57,18 +57,19 @@ public class PlayerController : MonoBehaviour
         if(gameManager.isGameActive == true)
         {
             // 플레이어의 현재 위치를 정수 단위로 반환. 칸마다 식물을 심기 위해서.
-            playerIntPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+            playerIntPos = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 0);
 
             // 식물 심기 (심을 수 있을 때만)
             if (Input.GetKeyDown(KeyCode.Space) && canPlant == true)
             {
+                canPlant = false;
                 canMove = false;    // 식물을 심을 때는 움직일 수 없음
                 playerSpriteChangeScript.playerState = 3;   // 플레이어의 상태를 노동 상태로 업데이트
                 StartCoroutine(PlantCannotMove());
             }
             else if (Input.GetKeyDown(KeyCode.Space) && canPlant == false)
             {
-                Debug.Log("Can't plant");
+                //Debug.Log("Can't plant");
             }
 
             AttackEnemy();
@@ -81,8 +82,9 @@ public class PlayerController : MonoBehaviour
         // 플레이어의 정수 단위 위치에서 식물 심기
         Instantiate(firstPlantPrefabs, playerIntPos, transform.rotation);
         // 1단계 식물 비용 빼기
-        gameManager.sumHp -= firstPlantPrefabs.GetComponent<Plant>().cost;
+        gameManager.playerHp -= firstPlantPrefabs.GetComponent<Plant>().cost;
         playerSpriteChangeScript.playerState = 0;   // 플레이어의 상태를 비노동 상태로 업데이트
+        canPlant = true;
     }
 
     IEnumerator PlantCannotMove()

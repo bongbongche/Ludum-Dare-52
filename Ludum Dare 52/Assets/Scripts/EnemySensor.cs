@@ -34,6 +34,9 @@ public class EnemySensor : MonoBehaviour
     // 식물이 죽으면 플레이어로 타겟을 바꿈
     private void OnTriggerExit2D(Collider2D collision)
     {
-        gameObject.transform.parent.GetComponent<Enemy>().target = GameObject.Find("Player");
+        if(collision.gameObject.tag == "Plant")
+        {
+            gameObject.transform.parent.GetComponent<Enemy>().target = GameObject.Find("Player");
+        }
     }
 }

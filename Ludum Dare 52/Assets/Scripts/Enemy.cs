@@ -5,12 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("Enemy Status")]
-    public float enemySpeed = 4f;
-    public float attackPower = 1f;
-    public float attackInterval = 2f;
-    public float enemyHp = 30f;
-    public float enemyMaxHp = 30f;
-    public float knockback = 100f;
+    public float enemySpeed;
+    public float attackPower;
+    public float attackInterval;
+    public float enemyHp;
+    public float enemyMaxHp;
+    public float knockback;
 
     [Header("Variables")]
     public Sprite[] enemySprites;
@@ -32,6 +32,14 @@ public class Enemy : MonoBehaviour
         enemySpriteRenderer.sprite = enemySprites[Random.Range(0, 3)];
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         target = GameObject.Find("Player");
+
+        enemySpeed = gameManager.enemySpeed;
+        attackPower = gameManager.attackPower;
+        attackInterval = gameManager.attackInterval;
+        enemyHp = gameManager.enemyHp;
+        enemyMaxHp = gameManager.enemyMaxHp;
+        knockback = gameManager.knockback;
+
         elapsedTime = 0;
     }
 
@@ -80,7 +88,7 @@ public class Enemy : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if(elapsedTime > attackInterval)
             {
-                gameManager.GetComponent<GameManager>().sumHp -= attackPower;
+                gameManager.GetComponent<GameManager>().playerHp -= attackPower;
                 elapsedTime = 0;
             }
         }

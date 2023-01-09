@@ -1,34 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
 public class Plant : MonoBehaviour
 {
     [Header("Grade 1 Status")]
-    public float plantHp = 50.0f;
-    public float plantMaxHp = 50.0f;
-    public float supplyHp = 0.2f;
-    public float supplyGap = 1.0f;
-    public float instantHp = 5f;
-    public float cost = 10f;
+    public float plantHp;
+    private float plantMaxHp;
+    private float supplyHp;
+    private float supplyGap;
+    private float instantHp;
+    public float cost;
 
     [Header("Grade 2 Status")]
-    public float secondPlantHp = 80.0f;
-    public float secondMaxPlantHp = 80.0f;
-    public float secondSupplyHp = 1.0f;
-    public float secondSupplyGap = 1.0f;
-    public float secondInstantHp = 15f;
-    public float secondCost = 30f;
+    private float secondPlantHp;
+    private float secondMaxPlantHp;
+    private float secondSupplyHp;
+    private float secondSupplyGap;
+    private float secondInstantHp;
+    private float secondCost;
 
     [Header("Grade 3 Status")]
-    public float thirdPlantHp = 150.0f;
-    public float thirdMaxPlantHp = 150.0f;
-    public float thirdSupplyHp = 2.0f;
-    public float thirdSupplyGap = 1.0f;
-    public float thirdInstantHp = 45f;
-    public float thirdCost = 90f;
+    private float thirdPlantHp;
+    private float thirdMaxPlantHp;
+    private float thirdSupplyHp;
+    private float thirdSupplyGap;
+    private float thirdInstantHp;
+    private float thirdCost;
 
     [Header("Variables")]
     public bool isClicked = false;
@@ -37,6 +38,7 @@ public class Plant : MonoBehaviour
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI deleteText;
     public Slider hpbar;
+    public Button upgradeButton;
 
     private SpriteRenderer plantSpriteRenderer;
     private GameManager gameManager;
@@ -46,6 +48,28 @@ public class Plant : MonoBehaviour
     {
         plantSpriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        plantHp = gameManager.plantHp;
+        plantMaxHp = gameManager.plantMaxHp;
+        supplyHp = gameManager.supplyHp;
+        supplyGap = gameManager.supplyGap;
+        instantHp = gameManager.instantHp;
+        cost = gameManager.cost;
+
+        secondPlantHp = gameManager.secondPlantHp;
+        secondMaxPlantHp = gameManager.secondMaxPlantHp;
+        secondSupplyHp = gameManager.secondSupplyHp;
+        secondSupplyGap = gameManager.secondSupplyGap;
+        secondInstantHp = gameManager.secondInstantHp;
+        secondCost = gameManager.secondCost;
+
+        thirdPlantHp = gameManager.thirdPlantHp;
+        thirdMaxPlantHp = gameManager.thirdMaxPlantHp;
+        thirdSupplyHp = gameManager.thirdSupplyHp;
+        thirdSupplyGap = gameManager.thirdSupplyGap;
+        thirdInstantHp = gameManager.thirdInstantHp;
+        thirdCost = gameManager.thirdCost;
+
         grade = 0;
         gameManager.grade_0 += 1;
     }
@@ -57,7 +81,7 @@ public class Plant : MonoBehaviour
         if(elapsedTime > supplyGap)
         {
             elapsedTime = 0;
-            gameManager.sumHp += supplyHp;
+            gameManager.playerHp += supplyHp;
         }
 
         if(grade == 0)
@@ -66,11 +90,11 @@ public class Plant : MonoBehaviour
         }
         else if(grade == 1)
         {
-            hpbar.value = secondPlantHp / secondMaxPlantHp;
+            hpbar.value = plantHp / secondMaxPlantHp;
         }
         else
         {
-            hpbar.value = thirdPlantHp / thirdMaxPlantHp;
+            hpbar.value = plantHp / thirdMaxPlantHp;
         }
 
         // 피가 없으면 죽음
@@ -91,8 +115,11 @@ public class Plant : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
+
     }
 
+    
     // 식물 누르면 팝업창
     private void OnMouseDown()
     {
@@ -116,8 +143,18 @@ public class Plant : MonoBehaviour
                 deleteText.text = "+" + secondInstantHp + " recovery";
                 isClicked = true;
             }
+            else if (isClicked == false && grade == 2)
+            {
+                gameObject.transform.GetChild(2).gameObject.SetActive(true);
+                upgradeText.text = "";
+                upgradeButton.gameObject.SetActive(false);
+                deleteText.text = "+" + thirdInstantHp + " recovery";
+                isClicked = true;
+            }
         }
     }
+    
+    
 
     // 식물 업그레이드
     public void PlantUpgrade()
@@ -139,7 +176,7 @@ public class Plant : MonoBehaviour
                 cost = secondCost;
 
                 // 식물 설치 비용
-                gameManager.sumHp -= cost;
+                gameManager.playerHp -= cost;
                 gameManager.grade_0 -= 1;
                 gameManager.grade_1 += 1;
             }
@@ -159,7 +196,7 @@ public class Plant : MonoBehaviour
                 cost = thirdCost;
 
                 // 식물 설치 비용
-                gameManager.sumHp -= cost;
+                gameManager.playerHp -= cost;
                 gameManager.grade_1 -= 1;
                 gameManager.grade_2 += 1;
             }
@@ -169,7 +206,7 @@ public class Plant : MonoBehaviour
     // 식물 제거
     public void PlantDelete()
     {
-        gameManager.sumHp += instantHp;
+        gameManager.playerHp += instantHp;
 
         // 게임 매니저에게 제거됐다고 알려줌
         if (grade == 0)

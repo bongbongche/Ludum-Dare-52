@@ -99,7 +99,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: dca191f15187e32469fb9b0b203fd97f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -210,7 +210,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: dca191f15187e32469fb9b0b203fd97f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -461,7 +461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f89b8536826e024d80e325d2d0545fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPlantPrefabs: {fileID: 7243599993428834491, guid: e000381b8f66069479f1b66a6b389c5b, type: 3}
   horizontalInput: 0
   verticalInput: 0
   moveSpeed: 4
@@ -471,6 +470,7 @@ MonoBehaviour:
   canMove: 0
   canPlant: 0
   playerIntPos: {x: 0, y: 0}
+  firstPlantPrefabs: {fileID: 7243599993428834491, guid: e000381b8f66069479f1b66a6b389c5b, type: 3}
   attackColliders:
   - {fileID: 104138276}
   - {fileID: 342760716}

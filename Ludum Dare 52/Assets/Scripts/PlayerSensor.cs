@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSensor : MonoBehaviour
 {
-    public Vector2 playerIntPos;
+    public Vector3 playerIntPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +29,10 @@ public class PlayerSensor : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         // 플레이어가 심을 수 없는 장소를 벗어나면 다시 심을 수 있음.
-        if (collision.CompareTag("Plant"))
+        if (collision.CompareTag("Plant") && collision.transform.position != playerIntPos)
         {
             GetComponentInParent<PlayerController>().canPlant = true;
         }

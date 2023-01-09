@@ -9,11 +9,14 @@ public class GameManager : MonoBehaviour
 {
     [Header("UI")]
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI hpText;
     public TextMeshProUGUI titleText;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI hpPlusText;
+    public TextMeshProUGUI hpMinusText;
     public Slider hpbar;
     public GameObject titleScreen;
     public GameObject gameOverScreen;
+    public GameObject gameClearScreen;
     public GameObject enemyPrefab;
     public bool isGameActive;
 
@@ -31,8 +34,47 @@ public class GameManager : MonoBehaviour
     public int grade_0 = 0;
     public int grade_1 = 0;
     public int grade_2 = 0;
+    
+    [Header("Grade 1 Status")]
+    public float plantHp = 50.0f;
+    public float plantMaxHp = 50.0f;
+    public float supplyHp = 0.2f;
+    public float supplyGap = 1.0f;
+    public float instantHp = 5f;
+    public float cost = 10f;
 
-    private float time = 0.0f;
+    [Header("Grade 2 Status")]
+    public float secondPlantHp = 80.0f;
+    public float secondMaxPlantHp = 80.0f;
+    public float secondSupplyHp = 1.0f;
+    public float secondSupplyGap = 1.0f;
+    public float secondInstantHp = 15f;
+    public float secondCost = 30f;
+
+    [Header("Grade 3 Status")]
+    public float thirdPlantHp = 150.0f;
+    public float thirdMaxPlantHp = 150.0f;
+    public float thirdSupplyHp = 2.0f;
+    public float thirdSupplyGap = 1.0f;
+    public float thirdInstantHp = 45f;
+    public float thirdCost = 90f;
+
+    [Header("Enemy Status")]
+    public float enemySpeed = 4f;
+    public float attackPower = 1f;
+    public float attackInterval = 2f;
+    public float enemyHp = 30f;
+    public float enemyMaxHp = 30f;
+    public float knockback = 100f;
+
+    [Header("Time Variables")]
+    public float acceleration = 1;
+    public float accelerationPoint = 0.5f;
+    public float accelerationInterval = 10f;
+    public float clearTime = 300f;
+
+    private float scoreTime = 0.0f;
+    private float acceleratingTime = 0.0f;
     private PlayerController playerController;
     private Vector2 RandomSpawnPos;
     private float xInnerRange = 10;
@@ -41,6 +83,9 @@ public class GameManager : MonoBehaviour
     private float yOuterRange = 3;
     private int spawnDirection;
     private float elapsedSpawnTime;
+    private float elapsedHpMinusTime;
+    private float elapsedAcceleratingTime;
+    private int minute, second;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +95,8 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         elapsedSpawnTime = 0;
+        elapsedHpMinusTime = 0;
+        elapsedAcceleratingTime = 0;
     }
 
     // Update is called once per frame
@@ -58,17 +105,41 @@ public class GameManager : MonoBehaviour
         if (isGameActive == true)
         {
             // 초 단위로 시간 읽기
-            time += Time.deltaTime;
+            scoreTime += Time.deltaTime;
 
-            // 초 단위로 스코어 업데이트
-            scoreText.text = "Time: " + Mathf.Ceil(time).ToString();
+            elapsedAcceleratingTime += Time.deltaTime;
+            if(elapsedAcceleratingTime >= accelerationInterval)
+            {
+                acceleration += accelerationPoint;
+                elapsedAcceleratingTime = 0;
+            }
+
+            // 시간 업데이트
+            minute = ((int)Mathf.Ceil(clearTime - scoreTime)) % 3600 / 60;
+            second = ((int)Mathf.Ceil(clearTime - scoreTime)) % 3600 % 60;
+
+            //scoreText.text = "Time: " + Mathf.Ceil(clearTime - scoreTime).ToString();
+            if(second < 10)
+            {
+                scoreText.text = "Time: " + minute + ":0" + second;
+            }
+            else
+            {
+                scoreText.text = "Time: " + minute + ":" + second;
+            }
 
             // 플레이어 체력 업데이트
-            playerHp = sumHp - time;
+            elapsedHpMinusTime += Time.deltaTime;
+            if(elapsedHpMinusTime >= supplyGap)
+            {
+                playerHp -= acceleration;
+                elapsedHpMinusTime = 0;
+            }
 
             // 현재 플레이어의 체력이 최대 체력을 넘지 못하게 제어
             if(playerHp > maxHp)
             {
+                playerHp = maxHp;
                 hpbar.value = maxHp / maxHp;
                 hpText.text = Mathf.Ceil(maxHp).ToString() + "/" + maxHp;  // HP 텍스트 업데이트
             }
@@ -80,12 +151,22 @@ public class GameManager : MonoBehaviour
 
             // 적 스폰 시간 변수
             elapsedSpawnTime += Time.deltaTime;
+
+            // 초당 회복력 표시
+            hpPlusText.text = "+" + (grade_0 * supplyHp + grade_1 * secondSupplyHp + grade_2 * thirdSupplyHp).ToString("F1") + " HP/s";
+            // 초당 피깎 표시
+            hpMinusText.text = "-" + acceleration.ToString("F1") + " HP/s";
         }
 
         // 플레이어의 체력이 0이 됐을 때 게임 종료
         if(playerHp <= 0)
         {
             GameOver();
+        }
+
+        if((clearTime - scoreTime) <= 0)
+        {
+            GameClear();
         }
 
         // 정해진 인터벌에 정해진 수의 적 생성
@@ -99,13 +180,19 @@ public class GameManager : MonoBehaviour
             enemySpawnNum += enemySpawnPlus;
         }
 
-        Debug.Log("grade0 : " + grade_0 + ", grade1: " + grade_1 + ", grade2: " + grade_2);
     }
 
     // 게임 오버
     public void GameOver()
     {
         gameOverScreen.gameObject.SetActive(true);
+        playerController.canMove = false;
+        isGameActive = false;
+    }
+
+    public void GameClear()
+    {
+        gameClearScreen.gameObject.SetActive(true);
         playerController.canMove = false;
         isGameActive = false;
     }

@@ -996,7 +996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5937761793201190931
 Transform:
   m_ObjectHideFlags: 0
@@ -1453,6 +1453,7 @@ GameObject:
   - component: {fileID: 869082418592971607}
   - component: {fileID: 6047954420142508616}
   - component: {fileID: 1556065218022594143}
+  - component: {fileID: 1921548331}
   m_Layer: 7
   m_Name: 1nd Plant
   m_TagString: Plant
@@ -1569,6 +1570,7 @@ MonoBehaviour:
   upgradeText: {fileID: 5680843570767242491}
   deleteText: {fileID: 8729561069537220829}
   hpbar: {fileID: 2024277613691858867}
+  upgradeButton: {fileID: 7026940982061916063}
 --- !u!61 &6047954420142508616
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1611,6 +1613,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.535}
   m_Size: {x: 1.03, y: 1.07}
   m_Direction: 0
+--- !u!50 &1921548331
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243599993428834491}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &7838345505800362033
 GameObject:
   m_ObjectHideFlags: 0
